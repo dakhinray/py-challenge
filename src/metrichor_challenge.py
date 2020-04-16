@@ -76,7 +76,6 @@ def main():
     # Parse options and arguments
     (options, args) = parser.parse_args()
 
-    print(options, args, sys.argv)
     # Check if logging enabled or not
     if options.verbose:
         level = logging.INFO
