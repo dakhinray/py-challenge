@@ -15,21 +15,24 @@ except ImportError:
 
 #import logging
 
+# Context manager to capture output of the test and revert back
 @contextmanager
 def capture(command, *args, **kwargs):
   out, sys.stdout = sys.stdout, StringIO()
-  err, sys.stderr = sys.stderr, StringIO()
   try:
     command(*args, **kwargs)
     sys.stdout.seek(0)
-    yield sys.stdout.read() + sys.stderr.read()
+    yield sys.stdout.read()
   finally:
     sys.stdout = out
-    sys.stderr = err
 
 
 class MyTestCase(unittest.TestCase):
     def test_case1(self):
+        '''
+        test with no matching filename
+        :return: 0
+        '''
         #log = logging.getLogger('Temp')
         path = './data'
         filePath = path + '/temp'
@@ -55,6 +58,10 @@ class MyTestCase(unittest.TestCase):
             shutil.rmtree(path)
 
     def test_case2(self):
+        '''
+        test with one matching filename and -q
+        :return: 6
+        '''
         #log = logging.getLogger('Temp')
         path = './data'
         filePath = path + '/temp.data.json'
@@ -81,6 +88,10 @@ class MyTestCase(unittest.TestCase):
             shutil.rmtree(path)
 
     def test_case3(self):
+        '''
+        test with one matching filename and no -q
+        :return: 6
+        '''
         #log = logging.getLogger('Temp')
         path = './data'
         filePath = path + '/temp.data.json'
@@ -107,6 +118,10 @@ class MyTestCase(unittest.TestCase):
             shutil.rmtree(path)
 
     def test_case4(self):
+        '''
+        test with one matching filename and no -q and no path
+        :return: 6
+        '''
         #log = logging.getLogger('Temp')
         path = './data'
         filePath = path + '/temp.data.json'
@@ -131,6 +146,7 @@ class MyTestCase(unittest.TestCase):
             os.remove(filePath)
         if os.path.exists(path):
             shutil.rmtree(path)
+
 
 
 

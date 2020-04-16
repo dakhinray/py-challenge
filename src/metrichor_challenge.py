@@ -29,9 +29,11 @@ def find_files(path='.'):
 
 
 def processline(line):
+    # parse data
     data = json.loads(line)
     val = 0
     try:
+        # data parsed read the desired data from the parse
         val = int(data[TextPattern])
         return val
     except ValueError as err:
@@ -47,7 +49,9 @@ def process(file=None):
         return 0
 
     try:
+        # open file
         with open(file, mode="r") as fp:
+            # processes one line at a time
             for line in fp.readlines():
                 total += processline(line)
     except Exception as err:
